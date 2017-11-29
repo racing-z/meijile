@@ -5,13 +5,23 @@ import App from './App'
 import router from './router'
 import store from './vuex/index'
 import MuseUI from 'muse-ui'
-import 'muse-ui/dist/muse-ui.css'
-import './static/css/plugin/material-design-icons/font.css'
-import './static/js/fontsize'
+import './config/index'
+import iView from 'iview'
+// 元素是否在可视区域插件
+import VueObserveVisibility from 'vue-observe-visibility'
 
-import fastclick from 'fastclick'
-fastclick.attach(document.body)
+// 自定义插件
+// import vQuery from './unit/'
+
+import 'muse-ui/dist/muse-ui.css'
+import 'iview/dist/styles/iview.css'
+// google material 字体与图表文件
+
+import './static/css/plugin/material-design-icons/GoogleIcon.css'
+
 Vue.use(MuseUI)
+Vue.use(iView)
+Vue.use(VueObserveVisibility)
 
 Vue.config.productionTip = false
 

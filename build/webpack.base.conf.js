@@ -3,6 +3,7 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var webpack = require('webpack')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -20,13 +21,14 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json', 'less'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
     },
     symlinks: false
   },
+  
   module: {
     rules: [
       {
@@ -75,7 +77,18 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }) // 这里用了样式分离出来的插件，如果不想分离出来，可以直接这样写 loader:'style!css!sass'
-      }
+      },
+      {
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!less-loader'
+      },
+      { test: /iview.src.*?js$/, loader: 'babel-loader' }
     ]
-  }
+  },
+//   plugins: [
+//     new webpack.ProvidePlugin({
+//         $: "jquery",
+//         jQuery: "jquery"
+//     })
+//  ],
 }

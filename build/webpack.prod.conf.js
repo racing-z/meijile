@@ -24,7 +24,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    chunkFilename: utils.assetsPath('js/[name].chunk.[chunkhash].js')
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -88,6 +88,21 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
+    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   async: 'common-in-lazy',
+    //   minChunks: ({ resource } = {}) => (
+    //     resource &&
+    //     resource.includes('node_modules') &&
+    //     /iView/.test(resource)
+    //   )
+    // }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      async: 'used-twice',
+      minChunks: (module, count) => (
+        count >= 2
+      )
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
